@@ -19,6 +19,8 @@
         private System.Windows.Forms.Button btnDeleteTask;
         private System.Windows.Forms.Button btnToggleDone;
         private System.Windows.Forms.Button btnClearFields;
+        private System.Windows.Forms.Button btnExportJson;
+        private System.Windows.Forms.Button btnStats;
         private System.Windows.Forms.GroupBox grpTasks;
         private System.Windows.Forms.DataGridView dgvTasks;
         private System.Windows.Forms.Panel pnlSearch;
@@ -57,6 +59,8 @@
             this.btnDeleteTask = new System.Windows.Forms.Button();
             this.btnToggleDone = new System.Windows.Forms.Button();
             this.btnClearFields = new System.Windows.Forms.Button();
+            this.btnExportJson = new System.Windows.Forms.Button();
+            this.btnStats = new System.Windows.Forms.Button();
             this.grpTasks = new System.Windows.Forms.GroupBox();
             this.dgvTasks = new System.Windows.Forms.DataGridView();
             this.pnlSearch = new System.Windows.Forms.Panel();
@@ -106,6 +110,8 @@
             this.lblHeaderSubtitle.Text = "Практическая работа №4–5: Git, ветвление, слияние веток и разрешение конфликтов";
 
             // grpTaskDetails
+            this.grpTaskDetails.Controls.Add(this.btnStats);
+            this.grpTaskDetails.Controls.Add(this.btnExportJson);
             this.grpTaskDetails.Controls.Add(this.btnClearFields);
             this.grpTaskDetails.Controls.Add(this.btnToggleDone);
             this.grpTaskDetails.Controls.Add(this.btnDeleteTask);
@@ -128,33 +134,33 @@
 
             // lblTitle
             this.lblTitle.AutoSize = true;
-            this.lblTitle.Location = new System.Drawing.Point(15, 25);
+            this.lblTitle.Location = new System.Drawing.Point(15, 23);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(68, 17);
             this.lblTitle.Text = "Название:";
 
             // txtTitle
-            this.txtTitle.Location = new System.Drawing.Point(18, 45);
+            this.txtTitle.Location = new System.Drawing.Point(18, 43);
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(285, 24);
 
             // lblDesc
             this.lblDesc.AutoSize = true;
-            this.lblDesc.Location = new System.Drawing.Point(15, 80);
+            this.lblDesc.Location = new System.Drawing.Point(15, 75);
             this.lblDesc.Name = "lblDesc";
             this.lblDesc.Size = new System.Drawing.Size(71, 17);
             this.lblDesc.Text = "Описание:";
 
             // txtDesc
-            this.txtDesc.Location = new System.Drawing.Point(18, 100);
+            this.txtDesc.Location = new System.Drawing.Point(18, 95);
             this.txtDesc.Multiline = true;
             this.txtDesc.Name = "txtDesc";
             this.txtDesc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtDesc.Size = new System.Drawing.Size(285, 90);
+            this.txtDesc.Size = new System.Drawing.Size(285, 80);
 
             // lblPriority
             this.lblPriority.AutoSize = true;
-            this.lblPriority.Location = new System.Drawing.Point(15, 205);
+            this.lblPriority.Location = new System.Drawing.Point(15, 185);
             this.lblPriority.Name = "lblPriority";
             this.lblPriority.Size = new System.Drawing.Size(76, 17);
             this.lblPriority.Text = "Приоритет:";
@@ -162,20 +168,20 @@
             // cmbPriority
             this.cmbPriority.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPriority.FormattingEnabled = true;
-            this.cmbPriority.Location = new System.Drawing.Point(18, 225);
+            this.cmbPriority.Location = new System.Drawing.Point(18, 205);
             this.cmbPriority.Name = "cmbPriority";
             this.cmbPriority.Size = new System.Drawing.Size(285, 25);
 
             // lblDueDate
             this.lblDueDate.AutoSize = true;
-            this.lblDueDate.Location = new System.Drawing.Point(15, 265);
+            this.lblDueDate.Location = new System.Drawing.Point(15, 240);
             this.lblDueDate.Name = "lblDueDate";
             this.lblDueDate.Size = new System.Drawing.Size(120, 17);
             this.lblDueDate.Text = "Срок выполнения:";
 
             // dtpDueDate
             this.dtpDueDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDueDate.Location = new System.Drawing.Point(18, 285);
+            this.dtpDueDate.Location = new System.Drawing.Point(18, 260);
             this.dtpDueDate.Name = "dtpDueDate";
             this.dtpDueDate.Size = new System.Drawing.Size(285, 24);
 
@@ -185,9 +191,9 @@
             this.btnAddTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddTask.ForeColor = System.Drawing.Color.White;
             this.btnAddTask.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnAddTask.Location = new System.Drawing.Point(18, 330);
+            this.btnAddTask.Location = new System.Drawing.Point(18, 298);
             this.btnAddTask.Name = "btnAddTask";
-            this.btnAddTask.Size = new System.Drawing.Size(285, 34);
+            this.btnAddTask.Size = new System.Drawing.Size(285, 32);
             this.btnAddTask.Text = "+ Добавить задачу";
             this.btnAddTask.UseVisualStyleBackColor = false;
 
@@ -196,9 +202,9 @@
             this.btnToggleDone.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnToggleDone.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnToggleDone.ForeColor = System.Drawing.Color.White;
-            this.btnToggleDone.Location = new System.Drawing.Point(18, 370);
+            this.btnToggleDone.Location = new System.Drawing.Point(18, 335);
             this.btnToggleDone.Name = "btnToggleDone";
-            this.btnToggleDone.Size = new System.Drawing.Size(285, 30);
+            this.btnToggleDone.Size = new System.Drawing.Size(285, 28);
             this.btnToggleDone.Text = "Сменить статус (Готово)";
             this.btnToggleDone.UseVisualStyleBackColor = false;
 
@@ -207,9 +213,9 @@
             this.btnDeleteTask.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnDeleteTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDeleteTask.ForeColor = System.Drawing.Color.White;
-            this.btnDeleteTask.Location = new System.Drawing.Point(18, 406);
+            this.btnDeleteTask.Location = new System.Drawing.Point(18, 368);
             this.btnDeleteTask.Name = "btnDeleteTask";
-            this.btnDeleteTask.Size = new System.Drawing.Size(135, 30);
+            this.btnDeleteTask.Size = new System.Drawing.Size(138, 28);
             this.btnDeleteTask.Text = "Удалить";
             this.btnDeleteTask.UseVisualStyleBackColor = false;
 
@@ -218,11 +224,33 @@
             this.btnClearFields.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnClearFields.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearFields.ForeColor = System.Drawing.Color.White;
-            this.btnClearFields.Location = new System.Drawing.Point(168, 406);
+            this.btnClearFields.Location = new System.Drawing.Point(165, 368);
             this.btnClearFields.Name = "btnClearFields";
-            this.btnClearFields.Size = new System.Drawing.Size(135, 30);
+            this.btnClearFields.Size = new System.Drawing.Size(138, 28);
             this.btnClearFields.Text = "Очистить";
             this.btnClearFields.UseVisualStyleBackColor = false;
+
+            // btnExportJson (Ветка AddFunction)
+            this.btnExportJson.BackColor = System.Drawing.Color.FromArgb(142, 68, 173);
+            this.btnExportJson.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExportJson.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExportJson.ForeColor = System.Drawing.Color.White;
+            this.btnExportJson.Location = new System.Drawing.Point(18, 403);
+            this.btnExportJson.Name = "btnExportJson";
+            this.btnExportJson.Size = new System.Drawing.Size(285, 29);
+            this.btnExportJson.Text = "Экспорт в JSON";
+            this.btnExportJson.UseVisualStyleBackColor = false;
+
+            // btnStats (Ветка AddFunction)
+            this.btnStats.BackColor = System.Drawing.Color.FromArgb(243, 156, 18);
+            this.btnStats.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnStats.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStats.ForeColor = System.Drawing.Color.White;
+            this.btnStats.Location = new System.Drawing.Point(18, 437);
+            this.btnStats.Name = "btnStats";
+            this.btnStats.Size = new System.Drawing.Size(285, 29);
+            this.btnStats.Text = "Статистика и отчёт";
+            this.btnStats.UseVisualStyleBackColor = false;
 
             // grpTasks
             this.grpTasks.Controls.Add(this.dgvTasks);
