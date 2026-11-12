@@ -76,6 +76,10 @@ namespace GitPractice
             btnToggleDone.Click += BtnToggleDone_Click;
             btnDeleteTask.Click += BtnDeleteTask_Click;
             btnClearFields.Click += BtnClearFields_Click;
+
+            // Search and filter events
+            txtSearch.TextChanged += (s, e) => RefreshGrid();
+            cmbFilter.SelectedIndexChanged += (s, e) => RefreshGrid();
         }
 
         private void AddSampleData()
@@ -99,14 +103,40 @@ namespace GitPractice
                 DueDate = DateTime.Today.AddDays(1),
                 IsCompleted = false
             });
+
+            _tasks.Add(new TaskItem
+            {
+                Id = _nextId++,
+                Title = "Подготовить отчёт DOCX",
+                Description = "Оформить отчёт по требованиям практической работы №4-5",
+                Priority = TaskPriority.Средний,
+                DueDate = DateTime.Today.AddDays(3),
+                IsCompleted = false
+            });
         }
 
         private void BtnAddTask_Click(object? sender, EventArgs e)
         {
             var title = txtTitle.Text.Trim();
+            
+            // Enhanced Validation
             if (string.IsNullOrWhiteSpace(title))
             {
-                MessageBox.Show("Введите название задачи!", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Ошибка валидации: название задачи не может быть пустым!", "Валидация", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTitle.Focus();
+                return;
+            }
+
+            if (title.Length < 3)
+            {
+                MessageBox.Show("Ошибка валидации: длина названия задачи должна быть не менее 3 символов!", "Валидация", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTitle.Focus();
+                return;
+            }
+
+            if (dtpDueDate.Value.Date < DateTime.Today.AddMonths(-1))
+            {
+                MessageBox.Show("Предупреждение: дата срока задачи не может быть старше одного месяца!", "Валидация", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -180,8 +210,30 @@ namespace GitPractice
 
         private void RefreshGrid()
         {
+            IEnumerable<TaskItem> filtered = _tasks;
+
+            // Apply search query
+            var query = txtSearch.Text.Trim();
+            if (!string.IsNullOrEmpty(query))
+            {
+                filtered = filtered.Where(t => 
+                    t.Title.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                    t.Description.Contains(query, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // Apply status filter
+            switch (cmbFilter.SelectedIndex)
+            {
+                case 1: // Только активные
+                    filtered = filtered.Where(t => !t.IsCompleted);
+                    break;
+                case 2: // Только выполненные
+                    filtered = filtered.Where(t => t.IsCompleted);
+                    break;
+            }
+
             dgvTasks.DataSource = null;
-            dgvTasks.DataSource = _tasks.ToList();
+            dgvTasks.DataSource = filtered.ToList();
 
             UpdateStatusBar();
         }
