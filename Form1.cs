@@ -244,7 +244,7 @@ namespace GitPractice
             int done = _tasks.Count(t => t.IsCompleted);
             int active = total - done;
 
-            lblStatusInfo.Text = $"Задач: {total} | Завершено: {done} | В работе: {active}";
+            lblStatusInfo.Text = $"[Основная система] Задач в базе: {total} (Выполнено: {done}, Активных: {active}) | Время: {DateTime.Now:HH:mm:ss}";
         }
     }
 }
