@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -80,6 +81,10 @@ namespace GitPractice
             // Search and filter events
             txtSearch.TextChanged += (s, e) => RefreshGrid();
             cmbFilter.SelectedIndexChanged += (s, e) => RefreshGrid();
+
+            // Новая функциональность ветки AddFunction
+            btnExportJson.Click += BtnExportJson_Click;
+            btnStats.Click += BtnStats_Click;
         }
 
         private void AddSampleData()
@@ -199,6 +204,35 @@ namespace GitPractice
             txtTitle.Focus();
         }
 
+        private void BtnExportJson_Click(object? sender, EventArgs e)
+        {
+            using var sfd = new SaveFileDialog
+            {
+                Title = "Экспорт списка задач в JSON",
+                Filter = "JSON файлы (*.json)|*.json|Все файлы (*.*)|*.*",
+                FileName = $"tasks_export_{DateTime.Now:yyyyMMdd_HHmmss}.json"
+            };
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    TaskExporter.ExportToJson(sfd.FileName, _tasks);
+                    MessageBox.Show($"Данные успешно экспортированы!\nФайл: {sfd.FileName}", "Экспорт завершён", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка экспорта: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void BtnStats_Click(object? sender, EventArgs e)
+        {
+            var report = TaskExporter.GetSummaryReport(_tasks);
+            MessageBox.Show(report, "Аналитика и статистика задач", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
         private TaskItem? GetSelectedTask()
         {
             if (dgvTasks.CurrentRow?.DataBoundItem is TaskItem item)
@@ -244,7 +278,7 @@ namespace GitPractice
             int done = _tasks.Count(t => t.IsCompleted);
             int active = total - done;
 
-            lblStatusInfo.Text = $"[Основная система] Задач в базе: {total} (Выполнено: {done}, Активных: {active}) | Время: {DateTime.Now:HH:mm:ss}";
+            lblStatusInfo.Text = $"[TaskManager v2.0] Задач: {total} | Завершено: {done} | В работе: {active} | Экспорт JSON активен | Время: {DateTime.Now:HH:mm:ss}";
         }
     }
 }
